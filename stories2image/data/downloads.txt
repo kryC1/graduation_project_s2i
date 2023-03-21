@@ -1,5 +1,5 @@
 download and extract the files into this folder
 
-https://drive.google.com/drive/folders/1fE9-VYbDqGR8S_z2NVoFbfQgS7HSgzw8?usp=share_link
-
-rename the folder as "general"
+image captioning model -> https://drive.google.com/file/d/1--LOxGnmfVNxgVvUgKrbOwlWa6W6zj_P/view?usp=share_link
+image captioning wordmap -> https://drive.google.com/file/d/1-ARMlZDf687rCujAfZyg68NKyeLHUWRD/view?usp=share_link
+google news vectors -> https://drive.google.com/file/d/1-7h83o2z9ZLlEZ-grBaHZeGEV4-RpMqn/view?usp=share_link
