@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'stories2image/main.css' %}">
+	<title></title>
+</head>
+<body>
+	<div class="center">
+		<h1>Text to Image Converter</h1>
+		<div class="input-div">
+			<form method="post" action="{% url 's2i-home' %}" >{% csrf_token %}
+				<textarea rows="10", cols="100", for="my_data", id="my_data", name="my_data" placeholder="Type here..."></textarea>
+				<button type="submit">Submit</button>
+			</form>
+		</div>
+
+		<div class="container">
+		    <div class="output-div">
+		    	<h2>INFO</h2>
+				{% for item in items %}
+					<p>{{ item }}</p>
+				{% endfor %}
+
+				<h2>IMAGE PATHS</h2>
+				{% for image in images %}
+					{{ image }}
+				{% endfor %}
+
+				<h2>IMAGES</h2>
+				{% for image in images %}
+					<img src="{{ image }}">
+				{% endfor %}
+		    </div>
+	    </div>
+
+    	<img src="{% static 'images/general/2900274587_f2cbca4c58.jpg' %}">
+	</div>
+    
+    
+    <script>
+      const inputField = document.getElementById('my_data');
+      const outputField1 = document.getElementById('output-field1');
+      const outputField2 = document.getElementById('output-field2');
+      const outputField3 = document.getElementById('output-field3');
+      const submitBtn = document.getElementById('submit-btn');
+      const myImage = document.getElementById('my-image');
+
+
+      var form = document.querySelector('form');
+			var submitBtn = form.querySelector('button[type="submit"]');
+			var myDataInput = form.querySelector('#my_data');
+			var outputField1 = document.getElementById("outputField1");
+
+			submitBtn.addEventListener('click', function(event) {
+			    event.preventDefault(); // Prevent the form from submitting normally
+			    {% if message%}
+				  	outputField1.value = "{{ message }}";
+				  {% endif %}
+
+			}
+
+      submitBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        const inputText = inputField.value;
+       // outputField1.value = inputText;
+				{% if message %}
+				  outputField1.value = "{{ message }}";
+				{% endif %}
+       // outputField2.value = inputText;
+       // outputField3.value = inputText;
+      });
+
+	  document.getElementById('submit-btn').addEventListener('click', function(event) {
+		event.preventDefault(); // prevent form submission
+		outputField.value = inputField.value;
+		myImage.src = 'https://via.placeholder.com/300';
+	  });
+    </script>
+</body>
+</html>
