@@ -14,7 +14,9 @@ from gensim.models import KeyedVectors
 from src.text.summarizer import NewsSummarizer
 from src.image.encoder import ImageEncoder
 from src.image.image_grouping import ImageGrouping
-from src.recommender import Recommender, Space
+#from src.recommender import Recommender, Space
+#from src.recommender_threads import Recommender, Space
+from src.recommender_preload import Recommender, Space
 from src.config import Word2VecConfig, ImageConfig
 from src.similar_words import get_similar_token
 from src.paragraph_split import split_paragraph
@@ -186,20 +188,25 @@ def get_image_ids(path_list, genre):
 
 def start_process(text_raw):
   #text_raw1 = "There were a boy and girl. They were at the beach. They were enjoying the sea and the sun. The girl suddenly got sick and wanted to leave. She took her white bag and left."
-  item_list = []
+  splitted_list = []
+  summary_list = []
+  keywords_org_list = []
+  keywords_new_list = []
+  genres_list = []
   image_path_list = []
 
   text_splitted = split_paragraph(text_raw).split("\n")
 
   gen1 = "general"
   gen2 = "general"
+  gen3 = "general"
 
   genres = []
 
   if len(text_splitted) == 1:
     gen1 = predict(text_splitted[0])
 
-    if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports":
+    if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports" or "education_reference":
       genres.append("general")
     else:
       genres.append(gen1)
@@ -208,49 +215,55 @@ def start_process(text_raw):
     gen1 = predict(text_splitted[0])
     gen2 = predict(text_splitted[1])
 
-    if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports":
+    if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports" or "education_reference":
       genres.append("general")
     else:
       genres.append(gen1)
 
-    if gen2 == "family_relationships" or gen2 == "Entertainment & Music" or gen2 == "Sports":
+    if gen2 == "family_relationships" or gen2 == "Entertainment & Music" or gen2 == "Sports" or "education_reference":
       genres.append("general")
     else:
       genres.append(gen2)
+
+  elif len(text_splitted) == 3:
+    gen1 = predict(text_splitted[0])
+    gen2 = predict(text_splitted[1])
+    gen3 = predict(text_splitted[2])
+
+    if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports" or "education_reference":
+      genres.append("general")
+    else:
+      genres.append(gen1)
+
+    if gen2 == "family_relationships" or gen2 == "Entertainment & Music" or gen2 == "Sports" or "education_reference":
+      genres.append("general")
+    else:
+      genres.append(gen2)
+
+    if gen3 == "family_relationships" or gen3 == "Entertainment & Music" or gen3 == "Sports" or "education_reference":
+      genres.append("general")
+    else:
+      genres.append(gen3)
 
 
   model = Stories2Image(recommender=recommender, summarizer=summarizer,
                      image_encoder=image_encoder, image_grouping=image_grouping)
 
   genre_cnt = 0
-  """for i in text_splitted:
-    print("Whole text -> {}".format(i))
-    print("Summary -> {}".format(model._get_text_summary(text=i)))
-
-    keywords_org = model._get_text_keywords(text=i)
-    print("Keywords -> {}".format(keywords_org))
-
-    keywords_new = []
-    for i in keywords_org:
-      keywords_new.append(get_similar_token(i, 1))
-    print("Keywords Added -> {}".format(keywords_new))
-    print("Genre -> {}".format(genres[genre_cnt]))
-    genre_cnt += 1
-    print()"""
 
   for i in text_splitted:
-    item_list.append(i)
-    item_list.append(model._get_text_summary(text=i))
+    splitted_list.append(i)
+    summary_list.append(model._get_text_summary(text=i))
 
     keywords_org = model._get_text_keywords(text=i)
-    item_list.append(keywords_org)
+    keywords_org_list.append(keywords_org)
 
     keywords_new = []
     for i in keywords_org:
       keywords_new.append(get_similar_token(i, 1))
-    item_list.append(keywords_new)
+    keywords_new_list.append(keywords_new)
 
-    item_list.append(genres[genre_cnt])
+    genres_list.append(genres[genre_cnt])
     genre_cnt += 1
 
   if len(text_splitted) == 1:
@@ -267,4 +280,4 @@ def start_process(text_raw):
     image_path_list.append(get_image_ids(reps_to_print3, genres[2]))
 
   print("process complete")
-  return item_list, image_path_list
+  return splitted_list, image_path_list, genres_list, keywords_new_list, keywords_org_list, summary_list
