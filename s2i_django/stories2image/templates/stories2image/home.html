@@ -1,83 +1,141 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="{% static 'stories2image/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'stories2image/home.css' %}">
+
+
 	<title></title>
 </head>
 <body>
-	<div class="center">
-		<h1>Text to Image Converter</h1>
-		<div class="input-div">
-			<form method="post" action="{% url 's2i-home' %}" >{% csrf_token %}
+
+	<div>
+        <div class="most-top-div" >
+            <h1 style="color: #E07A5F; font-size: 40px">Text To Image Converter</h1>
+        </div>
+    </div>
+
+
+    <div class="second-div">
+        <div class="second-div-a">
+            <form class = "second-div-a-form" method="post" action="{% url 's2i-home' %}" >{% csrf_token %}
 				<textarea rows="10", cols="100", for="my_data", id="my_data", name="my_data" placeholder="Type here..."></textarea>
-				<button type="submit">Submit</button>
+				<input class = "second-div-a-form-submit" type="submit" value="Convert">
 			</form>
-		</div>
+        </div>
 
-		<div class="container">
-		    <div class="output-div">
-		    	<h2>INFO</h2>
-				{% for item in items %}
-					<p>{{ item }}</p>
+        <div class="second-div-b">
+			<div class="slider-container">
+			  <div class="slider">
+			    {% for image in images %}
+					{% for i in image%}
+						<img src="{{i}}" alt="My Image">
+					{% endfor %}
 				{% endfor %}
+			  </div>
+	        <button class="prev">&#10094;</button>
+	        <button class="next">&#10095;</button>
+			</div>
+        </div>
+    </div>
 
-				<h2>IMAGE PATHS</h2>
-				{% for image in images %}
-					{{ image }}
+
+    <div class="third-div">
+      <div class="third-div-a">
+      		<h1 style="color: #3D405B; font-style: italic;">Summary of the Text</h1>
+      			{% for part in parts %}
+         			<p style="color: #3D405B; padding-left: 20px;"  >{{ part }}</p>
+         		{% endfor %}
+         		<br><br>
+         		{% for summary in summaries %}
+         			<p style="color: #3D405B; padding-left: 20px;"  >{{ summary }}</p>
+         		{% endfor %}
+      </div>
+
+      <div class="third-div-b">
+      	<h1 style="color: #3D405B; font-style: italic;"> Keywords</h1>
+				<ul style="list-style-type: disc; margin: 0; padding: 0; color: #3D405B;">
+					{% for korg in keywords_org %}
+						{% for i in korg %}
+							<li style="margin: 0 0 10px 20px; color: #3D405B;">{{ i }}</li>
+						{% endfor %}
+					{% endfor %}
+				</ul>
+      </div>
+
+      <div class="third-div-c">
+      	<h1 style="color: #3D405B; font-style: italic;"> Similar Keywords</h1>
+				<ul style="list-style-type: disc; margin: 0; padding: 0; color: #3D405B;">
+				  {% for knew in keywords_new %}
+						{% for i in knew %}
+							<li style="margin: 0 0 10px 20px; color: #3D405B;">{{ i }}</li>
+						{% endfor %}
+					{% endfor %}
+				</ul>
+      </div>
+
+      <div class="third-div-d">
+				<h1 style="color: #3D405B; font-style: italic;"> Selected Category</h1>
+				{% for genre in genres %}
+					<h1 style="color: #3D405B;  solid 1px;">{{ genre }}</h1>
 				{% endfor %}
-
-				<h2>IMAGES</h2>
-				{% for image in images %}
-					<img src="{{ image }}">
-				{% endfor %}
-		    </div>
-	    </div>
-
-    	<img src="{% static 'images/general/2900274587_f2cbca4c58.jpg' %}">
-	</div>
-    
-    
-    <script>
-      const inputField = document.getElementById('my_data');
-      const outputField1 = document.getElementById('output-field1');
-      const outputField2 = document.getElementById('output-field2');
-      const outputField3 = document.getElementById('output-field3');
-      const submitBtn = document.getElementById('submit-btn');
-      const myImage = document.getElementById('my-image');
+      </div>
+    </div>
 
 
-      var form = document.querySelector('form');
-			var submitBtn = form.querySelector('button[type="submit"]');
-			var myDataInput = form.querySelector('#my_data');
-			var outputField1 = document.getElementById("outputField1");
 
-			submitBtn.addEventListener('click', function(event) {
-			    event.preventDefault(); // Prevent the form from submitting normally
-			    {% if message%}
-				  	outputField1.value = "{{ message }}";
-				  {% endif %}
 
-			}
+    <script type="text/javascript">
+		const slider = document.querySelector('.slider');
+		const prevButton = document.querySelector('.prev');
+		const nextButton = document.querySelector('.next');
+		const images = document.querySelectorAll('.slider img');
 
-      submitBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        const inputText = inputField.value;
-       // outputField1.value = inputText;
-				{% if message %}
-				  outputField1.value = "{{ message }}";
-				{% endif %}
-       // outputField2.value = inputText;
-       // outputField3.value = inputText;
-      });
+		let counter = 1;
+		const size = images[0].clientWidth;
 
-	  document.getElementById('submit-btn').addEventListener('click', function(event) {
-		event.preventDefault(); // prevent form submission
-		outputField.value = inputField.value;
-		myImage.src = 'https://via.placeholder.com/300';
-	  });
+		slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+
+		nextButton.addEventListener('click', () => {
+		  if (counter >= images.length - 1) return;
+		  slider.style.transition = 'transform 0.5s ease-in-out';
+		  counter++;
+		  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+		});
+
+		prevButton.addEventListener('click', () => {
+		  if (counter <= 0) return;
+		  slider.style.transition = 'transform 0.5s ease-in-out';
+		  counter--;
+		  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+		});
+
+		slider.addEventListener('transitionend', () => {
+		  if (images[counter].alt === 'last clone') {
+		    slider.style.transition = 'none';
+		    counter = images.length - 2;
+		    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+		  }
+		  if (images[counter].alt === 'first clone') {
+		    slider.style.transition = 'none';
+		    counter = images.length - counter;
+		    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+		  }
+		});
+
+
     </script>
+
+    <footer>
+    	{% for image in images %}
+				{% for i in image%}
+					<img src="{{i}}">
+				{% endfor %}
+			{% endfor %}
+    </footer>
+
 </body>
 </html>
