@@ -10,24 +10,21 @@ import os
 sys.path.append("/home/kryc1/s2i_django/s2i_django")
 import settings
 image_dir = os.path.join(settings.BASE_DIR, 'stories2image', 'static', 'images')
-#image_paths = [os.path.join('/static/images', f) for f in os.listdir(image_dir) if f.endswith('.jpg')]
 
 def home(request):
     if request.method == 'POST':
         my_data = request.POST.get('my_data')
         print(image_dir)
 
-        item_list, image_path_list = start_process(my_data)
-
-        #item_list = ["ali", "veli", my_data]
-        #image_path_list = ["images/general/2360194369_d2fd03b337.jpg", "images/general/1095980313_3c94799968.jpg"]
-
-        # The input text is input_field.
-        # we can send output through context to fronted.
+        splitted_list, image_path_list, genres_list, keywords_new_list, keywords_org_list, summary_list = start_process(my_data)
 
         context = {
-            'items': item_list,
-            'images': image_path_list
+            'parts': splitted_list,
+            'images': image_path_list,
+            'genres': genres_list,
+            'keywords_new': keywords_new_list,
+            'keywords_org': keywords_org_list,
+            'summaries': summary_list
         }
 
         return render(request, 'stories2image/home.html', context)
