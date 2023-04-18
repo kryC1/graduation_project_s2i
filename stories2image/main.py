@@ -14,7 +14,9 @@ from gensim.models import KeyedVectors
 from src.text.summarizer import NewsSummarizer
 from src.image.encoder import ImageEncoder
 from src.image.image_grouping import ImageGrouping
-from src.recommender import Recommender, Space
+#from src.recommender import Recommender, Space
+#from src.recommender_threads import Recommender, Space
+from src.recommender_preload import Recommender, Space
 from src.config import Word2VecConfig, ImageConfig
 from src.similar_words import get_similar_token
 from src.paragraph_split import split_paragraph
@@ -178,26 +180,51 @@ text_splitted = split_paragraph(text_raw1).split("\n")
 
 gen1 = "general"
 gen2 = "general"
+gen3 = "general"
 
 genres = []
 
 if len(text_splitted) == 1:
   gen1 = predict(text_splitted[0])
-  genres.append(gen1)
+
+  if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports":
+    genres.append("general")
+  else:
+    genres.append(gen1)
 
 elif len(text_splitted) == 2:
   gen1 = predict(text_splitted[0])
   gen2 = predict(text_splitted[1])
 
-  if gen1 != "computer_science" or gen1 != "education_reference" or gen1 != "science_math":
+  if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports":
     genres.append("general")
   else:
     genres.append(gen1)
 
-  if gen2 != "computer_science" or gen1 != "education_reference" or gen1 != "science_math":
+  if gen2 == "family_relationships" or gen2 == "Entertainment & Music" or gen2 == "Sports":
+    genres.append("general")
+  else:
+    genres.append(gen2)
+
+elif len(text_splitted) == 3:
+  gen1 = predict(text_splitted[0])
+  gen2 = predict(text_splitted[1])
+  gen3 = predict(text_splitted[2])
+
+  if gen1 == "family_relationships" or gen1 == "Entertainment & Music" or gen1 == "Sports":
     genres.append("general")
   else:
     genres.append(gen1)
+
+  if gen2 == "family_relationships" or gen2 == "Entertainment & Music" or gen2 == "Sports":
+    genres.append("general")
+  else:
+    genres.append(gen2)
+
+  if gen3 == "family_relationships" or gen3 == "Entertainment & Music" or gen3 == "Sports":
+    genres.append("general")
+  else:
+    genres.append(gen3)
 
 
 model = Stories2Image(recommender=recommender, summarizer=summarizer,

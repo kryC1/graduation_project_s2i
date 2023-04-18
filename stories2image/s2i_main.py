@@ -148,7 +148,7 @@ class Stories2Image:
 
   def _get_selected_images_list(self, text_list, genres):
     if len(text_list) == 1:
-      rec_ids1 = self._get_recommended_image_ids_list(text_list, genres)
+      rec_ids1 = self._get_recommended_image_ids_list(genres, text_list)
       img_fns1: list = [os.path.join(self.images_folder + genres[0] + "/", f'{_id}.jpg') for _id in rec_ids1]
       reps1: list = self.image_grouping.get_representatives(image_filenames=img_fns1)
       return reps1
@@ -186,7 +186,7 @@ def get_image_ids(path_list, genre):
   return id_list
 
 
-def start_process(text_raw):
+def start_process(text_raw, order_input):
   #text_raw1 = "There were a boy and girl. They were at the beach. They were enjoying the sea and the sun. The girl suddenly got sick and wanted to leave. She took her white bag and left."
   splitted_list = []
   summary_list = []
@@ -195,7 +195,7 @@ def start_process(text_raw):
   genres_list = []
   image_path_list = []
 
-  text_splitted = split_paragraph(text_raw).split("\n")
+  text_splitted = split_paragraph(text_raw, order_input).split("\n")
 
   gen1 = "general"
   gen2 = "general"
@@ -251,9 +251,14 @@ def start_process(text_raw):
 
   genre_cnt = 0
 
+
   for i in text_splitted:
     splitted_list.append(i)
-    summary_list.append(model._get_text_summary(text=i))
+
+    try:
+      summary_list.append(i)
+    except:
+      summary_list.append(model._get_text_summary(text=i))
 
     keywords_org = model._get_text_keywords(text=i)
     keywords_org_list.append(keywords_org)
@@ -267,7 +272,7 @@ def start_process(text_raw):
     genre_cnt += 1
 
   if len(text_splitted) == 1:
-    reps_to_print1 = model._get_selected_images_list(text_splitted)
+    reps_to_print1 = model._get_selected_images_list(text_splitted, genres)
     image_path_list.append(get_image_ids(reps_to_print1, genres[0]))
   elif len(text_splitted) == 2:
     reps_to_print1, reps_to_print2 = model._get_selected_images_list(text_splitted, genres)
