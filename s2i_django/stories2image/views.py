@@ -14,9 +14,11 @@ image_dir = os.path.join(settings.BASE_DIR, 'stories2image', 'static', 'images')
 def home(request):
     if request.method == 'POST':
         my_data = request.POST.get('my_data')
+        split_order = request.POST.get('order')
+
         print(image_dir)
 
-        splitted_list, image_path_list, genres_list, keywords_new_list, keywords_org_list, summary_list = start_process(my_data)
+        splitted_list, image_path_list, genres_list, keywords_new_list, keywords_org_list, summary_list = start_process(my_data, split_order)
 
         context = {
             'parts': splitted_list,
