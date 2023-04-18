@@ -1,0 +1,2 @@
+exceptions made for negative value (short text)
+1. in paragraph_split.py, split_paragraph.
