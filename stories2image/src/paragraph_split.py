@@ -20,15 +20,33 @@ def activate_similarities(similarities: np.array, p_size=10) -> np.array:
     activated_similarities = np.sum(diagonals, axis=0)
     return activated_similarities
 
-def split_paragraph(raw_text):
+def split_paragraph(raw_text, order_input):
     model = SentenceTransformer('all-mpnet-base-v2')
     sentences = raw_text.split('. ')
     embeddings = model.encode(sentences)
     similarities = cosine_similarity(embeddings)
+    order_user = 0
 
-    activated_similarities = activate_similarities(similarities, p_size=4)
+    try:
+        activated_similarities = activate_similarities(similarities, p_size=4)
+    except:
+        print("exception negative value, raw_text is returned")
+        return raw_text
 
-    minmimas = argrelextrema(activated_similarities, np.less, order=1)
+    if order_input == "less_frequent":
+        print("less frequent\n")
+        order_user = 3
+    elif order_input == "normal":
+        print("normal frequent\n")
+        order_user = 2
+    elif order_input == "more_frequent":
+        print("more frequent\n")
+        order_user = 1
+    else:
+        print("i am in the else (less frequent)\n")
+        order_user = 1
+
+    minmimas = argrelextrema(activated_similarities, np.less, order=order_user)
 
     sentece_length = [len(each) for each in sentences]
     long = np.mean(sentece_length) + np.std(sentece_length) * 2
@@ -48,6 +66,7 @@ def split_paragraph(raw_text):
             text += f'{each}. '
 
     split_points = [each for each in minmimas[0]]
+
     text_to_split = ''
     for num, each in enumerate(sentences):
         if num in split_points:

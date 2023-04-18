@@ -36,9 +36,9 @@ class Recommender:
     print("computing similarities...")
 
     general_npy = np.load("/home/kryc1/stories2image/data/subspaces_npy/general.npy")
-    computer_npy = np.load("/home/kryc1/stories2image/data/subspaces_npy/computer_internet.npy")
+    """computer_npy = np.load("/home/kryc1/stories2image/data/subspaces_npy/computer_internet.npy")
     education_npy = np.load("/home/kryc1/stories2image/data/subspaces_npy/education_reference.npy")
-    science_npy = np.load("/home/kryc1/stories2image/data/subspaces_npy/science_math.npy")
+    science_npy = np.load("/home/kryc1/stories2image/data/subspaces_npy/science_math.npy")"""
 
     sub_txt1 = ""
     sub_txt2 = ""
@@ -68,6 +68,7 @@ class Recommender:
 
     if len(text) == 1:
       subspace_loc = "/home/kryc1/stories2image/data/subspaces/" + genres[0]
+      print(genres[0])
 
       subspaces_npy = ""
 
@@ -83,13 +84,18 @@ class Recommender:
       cnt = 0
       print(subspace_loc)
 
-      for im in os.listdir(subspace_loc):
+      subs = os.listdir(subspace_loc)
+      subs.sort()
+
+      sub_len = len(subs)
+
+      for i in range(sub_len):
         if cnt % 1000 == 0:
           print(cnt)
 
         sub_img = subspaces_npy[i]
         sim1 = self.space.subspaces_similarity(sub_txt_total[0], sub_img)
-        sims1.append((im.split('.')[0], sim1))
+        sims1.append((subs[i].split('.')[0], sim1))
 
         cnt = cnt + 1
 
