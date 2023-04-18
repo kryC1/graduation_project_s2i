@@ -107,7 +107,8 @@ class NewsSummarizer(Summarizer):
 
     def get_keywords(self, text: str, sentence_limit: int = 1, keyword_limit: int = 5) -> Counter:
         """Get keywords with weights"""
-        _summary: str = self.generate_summary(text, sentence_limit)
+        #_summary: str = self.generate_summary(text, sentence_limit)
+        _summary = text
         _keywords: set = self._filter_text(_summary)
         counter: Counter = self.word_counts(text)
         # print(f'summarizer. words count for all tokens:  {counter}')
