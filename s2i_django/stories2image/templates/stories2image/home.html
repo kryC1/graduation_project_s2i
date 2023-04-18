@@ -5,137 +5,313 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
 	<link rel="stylesheet" type="text/css" href="{% static 'stories2image/home.css' %}">
-
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-2cfcTzTcL21bX9Lnt+U3qj+zNGoi+W51sbbPFUxvGnV7bs1mnQlZ+PrSxSx4lfByoYmlY4d33a8KOy4X6VTsUw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 	<title></title>
 </head>
+
+</head>
 <body>
-
-	<div>
-        <div class="most-top-div" >
-            <h1 style="color: #E07A5F; font-size: 40px">Text To Image Converter</h1>
-        </div>
-    </div>
-
-
-    <div class="second-div">
-        <div class="second-div-a">
-            <form class = "second-div-a-form" method="post" action="{% url 's2i-home' %}" >{% csrf_token %}
-				<textarea rows="10", cols="100", for="my_data", id="my_data", name="my_data" placeholder="Type here..."></textarea>
-				<input class = "second-div-a-form-submit" type="submit" value="Convert">
-			</form>
-        </div>
-
-        <div class="second-div-b">
-			<div class="slider-container">
-			  <div class="slider">
-			    {% for image in images %}
-					{% for i in image%}
-						<img src="{{i}}" alt="My Image">
-					{% endfor %}
-				{% endfor %}
-			  </div>
-	        <button class="prev">&#10094;</button>
-	        <button class="next">&#10095;</button>
+	<div class="foreground">
+		<header class="header">
+			<div class="header-div-a">
+				<p class="header-div-a-paragraphtext">
+					story2image
+				</p>
 			</div>
-        </div>
-    </div>
+
+			<div class="header-div-b">
+				<p class="header-div-b-paragraph">About</p>
+				<p class="header-div-b-paragraph">Signup</p>
+			</div>
+		</header>
+
+		<div class="middle-div">
+			<div class="middle-div-a">	
+				<div class="box" id="input">
+					<form class="input-form" id="input-form" method="post" action="{% url 's2i-home' %}" > {% csrf_token %}
+						<textarea class="middle-div-a-textarea" id="input-text" name="my_data" placeholder="Enter your text here" ></textarea>
+					</form>
+				</div>
+				<div class="box" id="options">
+					<div class="options-header">
+						<h4 class="middle-div-a-h5">Options</h4>
+						<button class="close-options" id="close-options" onclick="closeOptions()">
+							<img src="/home/kryc1/s2i_django/stories2image/static/icon/close_options.png" id="close-options">
+						</button>
+					</div>
+
+					<form class="options-form">{% csrf_token %}
+						<div class="option-couple">
+							<label class="middle-div-a-label">Art Style</label>
+							<select class="middle-div-a-select" name="art-style">
+								<option value="1">Art Style 1</option>
+								<option value="2">Art Style 2</option>
+								<option value="3">Art Style 3</option>
+								<option value="4">Art Style 4</option>
+								<option value="5">Art Style 5</option>
+							</select>
+						</div>
+						<div class="option-couple">
+							<label class="middle-div-a-label">Paragraph Number</label>
+							<select class="middle-div-a-select" id="order" name="order">
+								<option value="less_frequent">Less Frequent</option>
+								<option value="normal">Normal</option>
+								<option value="more_frequent" selected>More Frequent</option>
+							</select>
+						</div>
+						<div class="option-couple">
+							<label class="middle-div-a-label">Image Size</label>
+							<select class="middle-div-a-select" name="image-size">
+								<option value="1">Image Size 1</option>
+								<option value="2">Image Size 2</option>
+								<option value="3">Image Size 3</option>
+								<option value="4">Image Size 4</option>
+								<option value="5">Image Size 5</option>
+							</select>
+						</div>
+						<div class="option-couple">
+							<label class="middle-div-a-label">Image Resolution</label>
+							<select class="middle-div-a-select" name="image-resolution">
+								<option value="1">Image Resolution 1</option>
+								<option value="2">Image Resolution 2</option>
+								<option value="3">Image Resolution 3</option>
+								<option value="4">Image Resolution 4</option>
+								<option value="5">Image Resolution 5</option>
+							</select>
+						</div>
+						<div class="option-couple">
+							<label class="middle-div-a-label">Image Format</label>
+							<select class="middle-div-a-select" name="image-format">
+								<option value="1">Image Format 1</option>
+								<option value="2">Image Format 2</option>
+								<option value="3">Image Format 3</option>
+								<option value="4">Image Format 4</option>
+								<option value="5">Image Format 5</option>
+							</select>
+						</div>
+						<div class="option-couple">
+							<label class="middle-div-a-label">Image Quality</label>
+							<select class="middle-div-a-select" name="image-quality">
+								<option value="1">Image Quality 1</option>
+								<option value="2">Image Quality 2</option>
+								<option value="3">Image Quality 3</option>
+								<option value="4">Image Quality 4</option>
+								<option value="5">Image Quality 5</option>
+							</select>
+						</div>
+						<div class="option-couple">
+							<textarea class="middle-div-a-hashtag"id="input-hashtag" name="input-hashtag" placeholder="Enter hashtag." ></textarea>
+						</div>
+						<input class="middle-div-a-save" type="submit" value="Save">
+					</form>
+				</div>
+			</div>
+			<div class="middle-div-b">
+				<div class="middle-div-b-div1">
+					<h1 class="middle-div-b-div1-h1">Find the best images for your story</h1>
+					
+				</div>
+				<div class="middle-div-b-div2">
+					<p class="middle-div-b-div2-p">Convert paragraphs into sets of images in seconds with the S2I AI Image Generator. Input text and watch your story visualize in any art style. </p>
+					
+				</div>
+				<div class="middle-div-b-div3">
+					<button class = "middle-div-b-div3-buttonleft" type="submit" form="input-form">Generate</button>
+					<button class = "middle-div-b-div3-buttonright" id="options_button" onclick="popOptions()">Options</button>
+					
+				</div>				
+			</div>
+		</div>
 
 
-    <div class="third-div">
-      <div class="third-div-a">
-      		<h1 style="color: #3D405B; font-style: italic;">Summary of the Text</h1>
-      			{% for part in parts %}
-         			<p style="color: #3D405B; padding-left: 20px;"  >{{ part }}</p>
-         		{% endfor %}
-         		<br><br>
-         		{% for summary in summaries %}
-         			<p style="color: #3D405B; padding-left: 20px;"  >{{ summary }}</p>
-         		{% endfor %}
-      </div>
+		{% for i in parts %}
+		<div class="second-div">
+			<div class="second-div-a"> 
+				<div class="second-div-a-div1">
+					<h1 class="second-div-a-div1-h1">Paragraph 1 </h1>
+				</div>
 
-      <div class="third-div-b">
-      	<h1 style="color: #3D405B; font-style: italic;"> Keywords</h1>
-				<ul style="list-style-type: disc; margin: 0; padding: 0; color: #3D405B;">
-					{% for korg in keywords_org %}
-						{% for i in korg %}
-							<li style="margin: 0 0 10px 20px; color: #3D405B;">{{ i }}</li>
+				<div class="second-div-a-div2">
+					<textarea id="output" class="second-div-a-div1-textarea" readonly >{{i}}</textarea>
+				</div>
+			</div>
+
+			<div class="second-div-b">
+				<div class="slider-ctr">
+
+					{% for image in images %}
+						{% for i in image %}
+							<div class="slide">
+								<img src="{{i}}" alt="Image"/>
+							</div>
 						{% endfor %}
 					{% endfor %}
-				</ul>
-      </div>
 
-      <div class="third-div-c">
-      	<h1 style="color: #3D405B; font-style: italic;"> Similar Keywords</h1>
-				<ul style="list-style-type: disc; margin: 0; padding: 0; color: #3D405B;">
-				  {% for knew in keywords_new %}
-						{% for i in knew %}
-							<li style="margin: 0 0 10px 20px; color: #3D405B;">{{ i }}</li>
-						{% endfor %}
-					{% endfor %}
-				</ul>
-      </div>
+					<div class="slider-control">
+						<div class="control prev disabled">
+						  <div class="fa fa-chevron-left"></div>
+						</div>
+						<div class="control next">
+						  <div class="fa fa-chevron-right"></div>
+						</div>
+					  </div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+				
 
-      <div class="third-div-d">
-				<h1 style="color: #3D405B; font-style: italic;"> Selected Category</h1>
-				{% for genre in genres %}
-					<h1 style="color: #3D405B;  solid 1px;">{{ genre }}</h1>
-				{% endfor %}
-      </div>
+		<div class="fourth-div">
+			<button class = "fourth-div-buttonleft">Download Images</button>
+			<button class = "fourth-div-buttonright">Regenerate</button>
+		</div>
+
+		<div class="fifth-div">
+			<img src="/home/kryc1/s2i_django/stories2image/static/icon/tubitak-logo.png" alt="Tubitak Logo">
+			<h1 class="fifth-div-h1">Supported by TÜBİTAK</h1>
+
+		</div>
+
+	    <script type="text/javascript">
+			const slider = document.querySelector('.slider');
+			const prevButton = document.querySelector('.prev');
+			const nextButton = document.querySelector('.next');
+			const images = document.querySelectorAll('.slider img');
+
+			function popOptions() {
+				document.getElementById('options').style.zIndex = 1;
+			}
+
+			function closeOptions() {
+				document.getElementById('options').style.zIndex = -1;
+			}
+
+			let counter = 1;
+			const size = images[0].clientWidth;
+
+			slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+
+			nextButton.addEventListener('click', () => {
+			  if (counter >= images.length - 1) return;
+			  slider.style.transition = 'transform 0.5s ease-in-out';
+			  counter++;
+			  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+			});
+
+			prevButton.addEventListener('click', () => {
+			  if (counter <= 0) return;
+			  slider.style.transition = 'transform 0.5s ease-in-out';
+			  counter--;
+			  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+			});
+
+			slider.addEventListener('transitionend', () => {
+			  if (images[counter].alt === 'last clone') {
+			    slider.style.transition = 'none';
+			    counter = images.length - 2;
+			    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+			  }
+			  if (images[counter].alt === 'first clone') {
+			    slider.style.transition = 'none';
+			    counter = images.length - counter;
+			    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
+			  }
+			});
+
+
+
+
+			var sliderControl = document.querySelector(".slider-control");
+
+      // slides informations
+
+      var slides = document.querySelectorAll(".slide"),
+          slidesLength = slides.length;
+
+      // slides array
+
+      var slidesArr = [].slice.call(slides);
+
+      // reverse array sorting
+
+      slidesArr = slidesArr.reverse();
+
+
+      // slide current
+      var slideCurrent = 0;
+
+    sliderControl.addEventListener("click", function(e){
+        target = e.target;
+
+        // Get next button
+        if(target.classList.contains("next")){
+          next = e.target,
+          prev = next.previousElementSibling,
+          nextSlide = slidesArr[slideCurrent + 1],
+          slide = slidesArr[slideCurrent];
+
+          slide.classList.add("slide-on");
+          slide.classList.remove("text-on");
+          nextSlide.classList.add("text-on");
+
+          slideCurrent += 1;        
+          if(slideCurrent > 0) {
+            prev.classList.remove("disabled");
+          }         
+          if(slideCurrent === slidesLength - 1){
+            next.classList.add("disabled");
+          }
+     	}     
+
+     // get prev button
+         if(target.classList.contains("prev")){
+
+          slideCurrent -= 1;
+
+          prev = e.target,
+          next = prev.nextElementSibling,
+          prevSlide = slidesArr[slideCurrent + 1],
+          slidesArr[slideCurrent];
+          prevSlide.classList.remove("text-on");
+          slide.classList.remove("slide-on");
+          slide.classList.add("text-on");
+
+          if(slideCurrent === slidesLength - 2){
+            next.classList.add("disabled");
+          }
+          if(slideCurrent === 0){
+          prev.classList.add("disabled");}
+
+         }   
+
+	});
+	    </script>
+
+	    <footer class="footer">
+	    	<div class="footer-div-a">
+	        	<p class="footer-div-a-p">&copy; 2023 My Website</p>
+	        	<p class="footer-div-a-p">Contact</p>
+	        	<p class="footer-div-a-p">Terms of Service</p>
+
+	    		
+	    	</div>
+
+	    	<div class="footer-div-b">
+				<i style="color: white; font-size: 1.5em;"  class="fab fa-instagram"></i>
+				<i style="color: white; font-size: 1.5em;" class="fab fa-linkedin"></i>
+
+	    		
+	    	</div>
+
+	    </footer>
+
+
+
     </div>
-
-
-
-
-    <script type="text/javascript">
-		const slider = document.querySelector('.slider');
-		const prevButton = document.querySelector('.prev');
-		const nextButton = document.querySelector('.next');
-		const images = document.querySelectorAll('.slider img');
-
-		let counter = 1;
-		const size = images[0].clientWidth;
-
-		slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-
-		nextButton.addEventListener('click', () => {
-		  if (counter >= images.length - 1) return;
-		  slider.style.transition = 'transform 0.5s ease-in-out';
-		  counter++;
-		  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-		});
-
-		prevButton.addEventListener('click', () => {
-		  if (counter <= 0) return;
-		  slider.style.transition = 'transform 0.5s ease-in-out';
-		  counter--;
-		  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-		});
-
-		slider.addEventListener('transitionend', () => {
-		  if (images[counter].alt === 'last clone') {
-		    slider.style.transition = 'none';
-		    counter = images.length - 2;
-		    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-		  }
-		  if (images[counter].alt === 'first clone') {
-		    slider.style.transition = 'none';
-		    counter = images.length - counter;
-		    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-		  }
-		});
-
-
-    </script>
-
-    <footer>
-    	{% for image in images %}
-				{% for i in image%}
-					<img src="{{i}}">
-				{% endfor %}
-			{% endfor %}
-    </footer>
-
 </body>
 </html>
