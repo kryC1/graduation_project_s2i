@@ -142,29 +142,36 @@
 			</div>
 
 			<div class="second-div-b">
-				<div class="slider-ctr">
+				<div>
+					<!-- Slideshow container -->
+					<div class="slideshow-container">
 
-					{% for image in images %}
-						{% for i in image %}
-							<div class="slide">
-								<img src="{{i}}" alt="Image"/>
-							</div>
+					  <!-- Full-width images with number and caption text -->
+					  {% for image in images %}
+							{% for i in image %}
+								<div class="mySlides fade">
+							    <img src="{{i}}" style="height:350px">
+							  </div>
+							{% endfor %}
 						{% endfor %}
-					{% endfor %}
 
-					<div class="slider-control">
-						<div class="control prev disabled">
-						  <div class="fa fa-chevron-left"></div>
-						</div>
-						<div class="control next">
-						  <div class="fa fa-chevron-right"></div>
-						</div>
-					  </div>
+					  <!-- Next and previous buttons -->
+					  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+					  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+					</div>
+					<br>
+
+					<!-- The dots/circles -->
+					<div style="text-align:center">
+					  <span class="dot" onclick="currentSlide(1)"></span>
+					  <span class="dot" onclick="currentSlide(2)"></span>
+					  <span class="dot" onclick="currentSlide(3)"></span>
+					  <span class="dot" onclick="currentSlide(4)"></span>
+					</div>
 				</div>
 			</div>
 		</div>
-		{% endfor %}
-				
+		{% endfor %}				
 
 		<div class="fourth-div">
 			<button class = "fourth-div-buttonleft">Download Images</button>
@@ -174,144 +181,59 @@
 		<div class="fifth-div">
 			<img src="/home/kryc1/s2i_django/stories2image/static/icon/tubitak-logo.png" alt="Tubitak Logo">
 			<h1 class="fifth-div-h1">Supported by TÜBİTAK</h1>
-
 		</div>
-
-	    <script type="text/javascript">
-			const slider = document.querySelector('.slider');
-			const prevButton = document.querySelector('.prev');
-			const nextButton = document.querySelector('.next');
-			const images = document.querySelectorAll('.slider img');
-
-			function popOptions() {
-				document.getElementById('options').style.zIndex = 1;
-			}
-
-			function closeOptions() {
-				document.getElementById('options').style.zIndex = -1;
-			}
-
-			let counter = 1;
-			const size = images[0].clientWidth;
-
-			slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-
-			nextButton.addEventListener('click', () => {
-			  if (counter >= images.length - 1) return;
-			  slider.style.transition = 'transform 0.5s ease-in-out';
-			  counter++;
-			  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-			});
-
-			prevButton.addEventListener('click', () => {
-			  if (counter <= 0) return;
-			  slider.style.transition = 'transform 0.5s ease-in-out';
-			  counter--;
-			  slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-			});
-
-			slider.addEventListener('transitionend', () => {
-			  if (images[counter].alt === 'last clone') {
-			    slider.style.transition = 'none';
-			    counter = images.length - 2;
-			    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-			  }
-			  if (images[counter].alt === 'first clone') {
-			    slider.style.transition = 'none';
-			    counter = images.length - counter;
-			    slider.style.transform = 'translateX(' + (-size * counter) + 'px)';
-			  }
-			});
-
-
-
-
-			var sliderControl = document.querySelector(".slider-control");
-
-      // slides informations
-
-      var slides = document.querySelectorAll(".slide"),
-          slidesLength = slides.length;
-
-      // slides array
-
-      var slidesArr = [].slice.call(slides);
-
-      // reverse array sorting
-
-      slidesArr = slidesArr.reverse();
-
-
-      // slide current
-      var slideCurrent = 0;
-
-    sliderControl.addEventListener("click", function(e){
-        target = e.target;
-
-        // Get next button
-        if(target.classList.contains("next")){
-          next = e.target,
-          prev = next.previousElementSibling,
-          nextSlide = slidesArr[slideCurrent + 1],
-          slide = slidesArr[slideCurrent];
-
-          slide.classList.add("slide-on");
-          slide.classList.remove("text-on");
-          nextSlide.classList.add("text-on");
-
-          slideCurrent += 1;        
-          if(slideCurrent > 0) {
-            prev.classList.remove("disabled");
-          }         
-          if(slideCurrent === slidesLength - 1){
-            next.classList.add("disabled");
-          }
-     	}     
-
-     // get prev button
-         if(target.classList.contains("prev")){
-
-          slideCurrent -= 1;
-
-          prev = e.target,
-          next = prev.nextElementSibling,
-          prevSlide = slidesArr[slideCurrent + 1],
-          slidesArr[slideCurrent];
-          prevSlide.classList.remove("text-on");
-          slide.classList.remove("slide-on");
-          slide.classList.add("text-on");
-
-          if(slideCurrent === slidesLength - 2){
-            next.classList.add("disabled");
-          }
-          if(slideCurrent === 0){
-          prev.classList.add("disabled");}
-
-         }   
-
-	});
-	    </script>
 
 	    <footer class="footer">
 	    	<div class="footer-div-a">
 	        	<p class="footer-div-a-p">&copy; 2023 My Website</p>
 	        	<p class="footer-div-a-p">Contact</p>
 	        	<p class="footer-div-a-p">Terms of Service</p>
-
-	    		
 	    	</div>
 
 	    	<div class="footer-div-b">
-				<i style="color: white; font-size: 1.5em;"  class="fab fa-instagram"></i>
-				<i style="color: white; font-size: 1.5em;" class="fab fa-linkedin"></i>
-
-	    		
+					<i style="color: white; font-size: 1.5em;"  class="fab fa-instagram"></i>
+					<i style="color: white; font-size: 1.5em;" class="fab fa-linkedin"></i>
 	    	</div>
-
 	    </footer>
-
-
-
     </div>
+
+	<script type="text/javascript">
+		function popOptions() {
+			document.getElementById('options').style.zIndex = 1;
+		}
+
+		function closeOptions() {
+			document.getElementById('options').style.zIndex = -1;
+		}
+
+		let slideIndex = 1;
+		showSlides(slideIndex);
+
+		// Next/previous controls
+		function plusSlides(n) {
+		  showSlides(slideIndex += n);
+		}
+
+		// Thumbnail image controls
+		function currentSlide(n) {
+		  showSlides(slideIndex = n);
+		}
+
+		function showSlides(n) {
+		  let i;
+		  let slides = document.getElementsByClassName("mySlides");
+		  let dots = document.getElementsByClassName("dot");
+		  if (n > slides.length) {slideIndex = 1}
+		  if (n < 1) {slideIndex = slides.length}
+		  for (i = 0; i < slides.length; i++) {
+		    slides[i].style.display = "none";
+		  }
+		  for (i = 0; i < dots.length; i++) {
+		    dots[i].className = dots[i].className.replace(" active", "");
+		  }
+		  slides[slideIndex-1].style.display = "block";
+		  dots[slideIndex-1].className += " active";
+		}
+  </script>
 </body>
 </html>
