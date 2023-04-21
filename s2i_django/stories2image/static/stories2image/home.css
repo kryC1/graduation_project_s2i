@@ -430,173 +430,6 @@ body {
   z-index: 9;
 }
 
-.slider-control {
-  position: absolute;
-  right: 30px;
-  bottom: 30px;
-  width: 60px;
-  overflow: hidden;
-  border-radius: 3px;
-  box-shadow: 0 3px 3px 3px rgba(0, 0, 0, 0.15);
-  z-index: 99;
-}
-.slider-control .control {
-  width: 50%;
-  height: 30px;
-  display: block;
-  float: left;
-  text-align: center;
-  line-height: 30px;
-  cursor: pointer;
-  transition: 0.3s all ease;
-  background: white;
-}
-.slider-control .control .icon {
-  pointer-events: none;
-  transition: 0.3s all ease;
-}
-.slider-control .control.disabled {
-  pointer-events: none;
-  background: #ddd;
-}
-.slider-control .control.disabled .icon {
-  opacity: 0.5;
-}
-
-.slide {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 0px;
-  margin: 0px;
-  transition: 0.45s all cubic-bezier(0.65, 0.05, 0.36, 1);
-  -webkit-clip-path: inset(0 0 0 0);
-  clip-path: inset(0 0 0 0);
-}
-
-.slide:before {
-  content: "";
-
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.125);
-}
-.slide.slide-on {
-  -webkit-clip-path: inset(0 100% 0 0);
-  clip-path: inset(0 100% 0 0);
-}
-
-.slide img {
-  width: 100%;
-  height: 100%;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*.slider-container {
-  position: relative;
-  overflow: hidden;
-  width: 80%;
-  height: 100%;;
-  border-radius: 10px;
-}
-
-.slider {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-}
-
-.outer-image {
-  width: 500px;
-  height: 350px;
-  border-radius: 10px;
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
-.slide-image {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 10px;
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
-.prev,
-.next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 24px;
-  color: white;
-  text-align: center;
-  z-index: 1;
-  font-size: 50px;
-  border: none;
-  background-color: transparent;
-  }
-
-.prev {
-  left: 0;
-
-}
-.next {
-  right: 0;
-}*/
-
 .third-div {
    margin-top: 50px;
    display: flex;
@@ -604,7 +437,6 @@ body {
    align-items: center;
    gap: 50px;
    justify-content: center;
-
 }
 
 .third-div-a {
@@ -648,13 +480,11 @@ body {
   border: none;
 }
 
-
 .third-div-a-div2 {
   display: flex;
   flex: 9;
   width: 90%;
 }
-
 
 .third-div-b {
    display: flex;
@@ -668,9 +498,7 @@ body {
  /* background: #76E989;
   background: linear-gradient(180deg, #47998E 0%, #76E989 100%);
 */
-
 }
-
 
 .fourth-div {
    margin-top: 50px;
@@ -680,7 +508,6 @@ body {
    gap: 35px;
    height: 80px;
 }
-
 
 .fourth-div-buttonleft {
   background: linear-gradient(90deg, #47998E 0%, #76E989 100%);
@@ -718,7 +545,6 @@ body {
   border-color: green;
 }
 
-
 .fifth-div {
   margin-top: 100px;
   display: flex;
@@ -744,6 +570,7 @@ body {
    margin-top: 60px;
 
 }
+
 .footer-div-a {
   display: flex;
   gap: 20px;
@@ -751,7 +578,6 @@ body {
   margin-left: 20px;
 
   flex-direction: row;
-
 }
 
 .footer-div-a-p {
@@ -763,6 +589,7 @@ body {
   line-height: 120%;
   color: #FFFFFF;
 }
+
 .footer-div-b {
   display: flex;
   width: 50%;
@@ -773,3 +600,70 @@ body {
 
 }
 
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
