@@ -1,10 +1,7 @@
 import os
 import numpy as np
-# import pandas as pd
-# import matplotlib.pyplot as plt
 from random import randint, sample
 from scipy.linalg import subspace_angles
-# from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.cluster import AgglomerativeClustering
 from scipy.spatial.distance import squareform
 
