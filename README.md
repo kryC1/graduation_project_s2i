@@ -12,7 +12,7 @@ s2i_django/stories2image/static/images/downloads.txt
 # Requirements
 - ubuntu (Some libraries we used are only exists on ubuntu)
 - python 3.6 or 3.7
-- django
+- other libraries are given in the requirements.txt
 
 # How to run?
 - install django
